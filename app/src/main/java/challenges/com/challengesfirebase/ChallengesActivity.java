@@ -1,12 +1,12 @@
 package challenges.com.challengesfirebase;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
-import com.firebase.ui.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,12 +25,12 @@ import challenges.com.challengesfirebase.Model.Challenges;
 
 public class ChallengesActivity extends AppCompatActivity {
 
-//    private RecyclerView mChallenges;
-//    private DatabaseReference mRef;
+    private RecyclerView mChallenges;
+    private DatabaseReference mRef;
 //    private FirebaseDatabase database;
-//    private Date date;
-//    private DateTime dateTime;
-//    private DatabaseReference challengesRef, datesRef;
+    private Date date;
+    private DateTime dateTime;
+    private DatabaseReference challengesRef, datesRef;
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -37,10 +38,56 @@ public class ChallengesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
 
+    private TextView setCurrentYear;
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_challenges);
+//
+//        database = FirebaseDatabase.getInstance();
+//        mRef = database.getReference().child("challenges");
+//        mRef.keepSynced(true);
+//
+//        mChallenges = findViewById(R.id.challengeRecycleView);
+//        mChallenges.setHasFixedSize(true);
+//        mChallenges.setLayoutManager(new LinearLayoutManager(this));
+//
+//
+//        database = FirebaseDatabase.getInstance();
+//        date = new Date();
+//        dateTime = new DateTime(date);
+//        challengesRef = database.getReference("challenges");
+//
+//        for (int i = 0; i < 365; i++) {
+//            dateTime = dateTime.plusDays(1);
+//            LocalDate localDate = dateTime.toLocalDate();
+//            String challengeDate = localDate.toString("yyyy-MM-dd");
+//            String formattedDate = localDate.toString("dd MMM");
+//
+//
+//            datesRef = challengesRef.child(challengeDate); //this value will be replaced with the actual date
+//
+//            datesRef.child("date").setValue(formattedDate);
+//            datesRef.child("challengeOne").setValue("My First Challenge");
+//            datesRef.child("challengeTwo").setValue("My Second Challenge");
+//        }
+//
+//    }
+//}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenges);
+
+        date = new Date();
+        dateTime = new DateTime(date);
+        LocalDate localDate = dateTime.toLocalDate();
+        String formattedDate = localDate.toString("yyyy");
+        setCurrentYear = findViewById(R.id.CurrentYearId);
+        setCurrentYear.setText(formattedDate);
+
 
         recyclerView = findViewById(R.id.challengeRecycleView);
         recyclerView.setHasFixedSize(true);
@@ -79,53 +126,5 @@ public class ChallengesActivity extends AppCompatActivity {
                 Log.w("Hello", "Failed to read value.", error.toException());
             }
         });
-
-
-
-
     }
 }
-
-
-
-
-
-/*
-database = FirebaseDatabase.getInstance();
-        mRef = database.getReference().child("challenges");
-        mRef.keepSynced(true);
-
-        mChallenges = findViewById(R.id.challengeRecycleView);
-        mChallenges.setHasFixedSize(true);
-        mChallenges.setLayoutManager(new LinearLayoutManager(this));
- */
-
-
-
-
-
-
-
-
-
-//        database = FirebaseDatabase.getInstance();
-//        date = new Date();
-//        dateTime = new DateTime(date);
-//        challengesRef = database.getReference("challenges");
-//
-//        for (int i = 0; i < 365; i++) {
-//            dateTime = dateTime.plusDays(1);
-//            LocalDate localDate = dateTime.toLocalDate();
-//            String challengeDate = localDate.toString("yyyy-MM-dd");
-//            String formattedDate = localDate.toString("dd-MM-yyyy");
-//
-//
-//            datesRef = challengesRef.child(challengeDate); //this value will be replaced with the actual date
-//
-//            datesRef.child("date").setValue(formattedDate);
-//            datesRef.child("challengeOne").setValue("My First Challenge");
-//            datesRef.child("challengeTwo").setValue("My Second Challenge");
-//        }
-
-//    }
-//}
